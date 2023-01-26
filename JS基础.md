@@ -247,7 +247,7 @@ a.toFixed(2);//取小数点后两位
 在浏览器执行环境中，尾调用没有优化。但在nodejs环境中有优化。
 
 
-#标准库（标准API）
+# 标准库（标准API）
 
 - 库：liberary
 - API：应用程序编程接口，Application Programing Interface
