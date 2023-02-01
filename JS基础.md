@@ -847,15 +847,15 @@ dom对象.addEventListener：注册事件
 
 ### 事件对象的通用成员
 
-- target & srcElement
+- **target** & srcElement
 
-事件目标（事件源）
+事件目标（事件源）：target指向最里层的组件，见例子。
 
-事件委托：通过给祖先元素注册事件，在程序处理程序中判断事件源进行不同的处理。
+事件委托：通过给祖先元素注册事件，在程序处理程序中判断事件源进行不同的处理。（即父元素内所有子元素都会收到事件处理，通过target获得到真实的被点到的最内层子元素，此时可根据不同子元素作为逻辑判断处理）
 
 通常，事件委托用于动态生成元素的区域。
 
-- currentTarget
+- **currentTarget**
 
 当前目标：获取绑定事件的元素，等效于this
 
@@ -863,7 +863,7 @@ dom对象.addEventListener：注册事件
 
 字符串，得到事件的类型
 
-- preventDefault & returnValue
+- **preventDefault** & returnValue（IE8以下使用returnValue，不建议使用）
 
 preventDefault方法
 
@@ -873,11 +873,11 @@ dom0的方式：在事件处理程序中返回false
 
 针对a元素，可以设置为功能性链接解决跳转问题
 
-- stopPropagation方法
+- **stopPropagation方法**
 
 阻止事件冒泡
 
-- eventPhase
+- **eventPhase**
 
 得到事件所处的阶段
 
