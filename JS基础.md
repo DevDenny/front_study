@@ -936,6 +936,7 @@ dom0的方式：在事件处理程序中返回false
 - keyup：抬起键盘上任意键触发
 
 keydown、keypress 如果阻止了事件默认行为，文本不会显示。
+按字符键时，keydown&keypress都会触发。
 
 ### 事件对象
 
@@ -945,14 +946,16 @@ KeyboardEvent
 - key：得到按键字符串，不适配键盘布局。能得到打印字符。
 - keyCode、which：得到键盘编码
 
+***键盘事件，尽量给大的组件注册，如果注册到小组件上，如果没有焦点到小组件上，键盘事件不触发。***
+
 ## 其他事件
 
 ### 表单事件
 
 - focus：元素聚焦的时候触发（能与用户发生交互的元素，都可以聚焦），该事件不会冒泡
 - blur：元素失去焦点时触发，该事件不会冒泡。
-- submit：提交表单事件，仅在form元素有效。
-- change：文本改变事件
+- submit：提交表单事件，仅在form元素有效。会冒泡。
+- change：文本改变事件，input只有离焦点时，才会触发。如果离开时文本没改变也不会触发。select选中改变也会触发。
 - input: 文本改变事件，即时触发
 
 ### 其他事件
@@ -967,13 +970,13 @@ window的load：页面中所有资源全部加载完毕的事件
 > 浏览器渲染页面的过程：
 > 1. 得到页面源代码
 > 2. 创建document节点
-> 3. 从上到下，将元素依次添加到dom树中，每添加一个元素，进行预渲染
-> 4. 按照结构，依次渲染子节点
+> 3. 从上到下，将元素依次添加到dom树中，每添加一个元素，进行预渲染（遇到外部资源（<Link>,<script>），同步加载外部资源后，继续往下渲染）,JS加载完后，立即执行。
+> 4. 按照结构，依次渲染子节点（图片资源是异步加载）
 
 
 document的DOMContentLoaded: dom树构建完成后发生
 
-readystate: loading、interactive、complete
+readystate（页面状态）: loading、interactive、complete
 
 interactive：触发DOMContentLoaded事件
 
