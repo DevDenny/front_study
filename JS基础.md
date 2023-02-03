@@ -1868,19 +1868,20 @@ complete：触发window的load事件
 
 - unload、beforeunload
 
-beforeunload: window的事件，关闭窗口时运行，可以阻止关闭窗口
+beforeunload: window的事件，关闭窗口时运行，可以阻止关闭窗口(chrome无效，IE可以)
 unload：window的事件，关闭窗口时运行
 
 - scroll
 
-窗口发生滚动时运行的事件
+窗口发生滚动时运行的事件，不仅可以写在窗口上，也可以写在元素上。元素有滚动条，也可触发。
 
-通过scrollTop和scrollLeft，可以获取和设置滚动距离。
+***通过scrollTop和scrollLeft属性，可以获取和设置滚动距离。***
+获取网页滚动高度：document.documentElement.scrollTop + document.body.scrollTop
 
 - resize
 
-窗口尺寸发生改变时运行的事件，监听的是视口尺寸
-
+窗口尺寸发生改变时运行的事件，监听的是视口尺寸（网页大小变化会触发，比例大小变化也会触发）
+ /Users/zhangzhiyong/JD/me/duyi/workspace/frontend-javascript-particular-master/8. dom事件/9. 其他事件/尺寸1.png  
 - contextmenu
 
 右键菜单事件
