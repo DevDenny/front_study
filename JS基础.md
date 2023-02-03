@@ -1882,13 +1882,15 @@ unload：window的事件，关闭窗口时运行
 
 窗口尺寸发生改变时运行的事件，监听的是视口尺寸（网页大小变化会触发，比例大小变化也会触发）
  /Users/zhangzhiyong/JD/me/duyi/workspace/frontend-javascript-particular-master/8. dom事件/9. 其他事件/尺寸1.png  
-- contextmenu
+***本节重点：各种尺寸需要熟悉，许院墙完成加深***
+   
+- contextmenu：点右键触发；
 
 右键菜单事件
 
 - paste
 
-粘贴事件
+粘贴事件：当前大多浏览器不允许修改剪切版内容；
 
 - copy
 
