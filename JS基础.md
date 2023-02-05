@@ -1068,9 +1068,9 @@ BOM：Browser Object Model
 计时器会返回一个数字，该数字表示计时器的编号
 
 - setTimeout方法：指定时间到达后运行某个函数
-  - clearTimeout方法：清除计时器
+  - clearTimeout方法：清除计时器，参数是计时器返回的那个数字。
 - setInterval方法：指定间隔时间到达后运行某个函数
-  - clearInterval方法：清除计时器
+  - clearInterval方法：清除计时器，参数是计时器返回的那个数字。
 
 ## window对象
 
@@ -1100,16 +1100,16 @@ href属性：得到目前地址
 
 reload方法：刷新当前页面
 
-- navigator
+- navigator：不用，都取不对
   
 - history：历史记录
 
-go方法
+go方法：正数前进，负数退
 back方法
-forword方法
+forword方法：前进
 
 - console
 
 log方法：打印对象的valueOf的返回值
 dir方法：打印对象结构
-tiem方法和timeEnd方法：用于计时
+tiem方法和timeEnd方法：用于计时，通常用于代码运行时长计算
