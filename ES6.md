@@ -136,7 +136,7 @@ ES6为了解决这个困扰，为字符串提供了方法：codePointAt，根据
 
 - includes
 
-判断字符串中是否包含指定的子字符串
+判断字符串中是否包含指定的子字符串（第二个参数表示从第几个字符开始查找）
 
 - startsWith
 
@@ -184,10 +184,34 @@ ES6之前处理字符串繁琐的两个方面：
 在书写形参时，直接给形参赋值，附的值即为默认值
 
 这样一来，当调用函数时，如果没有给对应的参数赋值（给它的值是undefined），则会自动使用默认值。
+```js
+function getContainer() {
+    console.log("abc");
+    return document.getElementById("container");
+}
+
+/**
+ * 创建一个元素
+ * @param {*} name 元素的名称 
+ * @param {*} container 元素的父元素
+ * @param {*} content 元素的内容 
+ */
+function createElement(name = "div", container = getContainer(), content = "") {
+    const ele = document.createElement(name)
+    if (content) {
+        ele.innerHTML = content;
+    }
+    container.appendChild(ele);
+}
+
+createElement(undefined, undefined, "手动阀手动阀十分")//不能只传一个参数，会放到name参数中。出错。
+createElement(undefined, undefined, "234242342424")
+createElement(undefined, document.getElementById("container"), "234242342424")
+```
 
 ### [扩展]对arguments的影响
 
-只要给函数加上参数默认值，该函数会自动变量严格模式下的规则：arguments和形参脱离
+只要给函数加上参数默认值，该函数会自动变成严格模式下的规则：arguments和形参脱离（argument不建议开发中使用）
 
 ### [扩展]留意暂时性死区
 
@@ -201,7 +225,7 @@ arguments的缺陷：
 2. 从语义上，使用arguments获取参数，由于形参缺失，无法从函数定义上理解函数的真实意图
 
 
-ES6的剩余参数专门用于手机末尾的所有参数，将其放置到一个形参数组中。
+ES6的剩余参数专门用于手收集末尾的所有参数，将其放置到一个形参数组中。
 
 语法:
 
@@ -216,6 +240,79 @@ function (...形参名){
 1. 一个函数，仅能出现一个剩余参数
 2. 一个函数，如果有剩余参数，剩余参数必须是最后一个参数
 
+# 4-3. 展开运算符
+
+使用方式：```  ...要展开的东西  ```
+
+```js
+/**
+ * 对所有数字求和
+ * @param  {...any} args 
+ */
+function sum(...args) {
+    let sum = 0;
+    for (let i = 0; i < args.length; i++) {
+        sum += args[i];
+    }
+    return sum;
+}
+
+/**
+ * 获取一个指定长度的随机数组成的数组
+ * @param {*} length 
+ */
+function getRandomNumbers(length) {
+    const arr = [];
+    for (let i = 0; i < length; i++) {
+        arr.push(Math.random());
+    }
+    return arr;
+}
+
+const numbers = getRandomNumbers(10);
+//将数组的每一项展开，依次作为参数传递，而不是把整个数组作为一个参数传递
+// sum(numbers)
+
+console.log(sum(...numbers))//相当于传递了10个参数
+console.log(sum(1, 3, ...numbers, 3, 5))
+```
+
+
+## 对数组展开 ES6
+- 数组拷贝
+```js
+const arr1 = [3, 67, 8, 5];
+
+//克隆arr1数组到arr2
+
+const arr2 = [0, ...arr1, 1];
+
+console.log(arr2, arr1 === arr2)
+```
+## 对对象展开 ES7
+```js
+const obj1 = {
+    name: "成哥",
+    age: 18,
+    love: "邓嫂",
+    address: {
+        country: "中国",
+        province: "黑龙江",
+        city: "哈尔滨"
+    }
+}
+
+// 浅克隆到obj2
+
+const obj2 = {
+    ...obj1,
+    name: "邓哥"   //对像属性不能重复，后面的会覆盖前面的。
+};
+
+console.log(obj2)
+
+console.log(obj1.address === obj2.address) // address是浅克隆，所以地址相同，指向同一个对像
+```
 ## 4-5. 明确函数的双重用途
 
 ES6提供了一个特殊的API，可以使用该API在函数内部，判断该函数是否使用了new来调用
