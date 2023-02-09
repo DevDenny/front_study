@@ -322,16 +322,44 @@ new.target
 //该表达式，得到的是：如果没有使用new来调用函数，则返回undefined
 //如果使用new调用函数，则得到的是new关键字后面的函数本身
 ```
+```js
+function Person(firstName, lastName) {
+    //判断是否是使用new的方式来调用的函数
+
+    // //过去的判断方式
+    // if (!(this instanceof Person)) {
+    //     throw new Error("该函数没有使用new来调用")
+    // }
+
+    if (new.target === undefined) {
+        throw new Error("该函数没有使用new来调用")
+    }
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.fullName = `${firstName} ${lastName}`;
+}
+
+const p1 = new Person("袁", "进");
+console.log(p1)
+
+
+
+const p2 = Person("袁", "进");
+console.log(p2);
+
+const p3 = Person.call(p1, "袁", "进")
+console.log(p3);
+```
 
 ## 4-6. 箭头函数
 
 回顾：this指向
 
-1. 通过对象调用函数，this指向对象
-2. 直接调用函数，this指向全局对象
-3. 如果通过new调用函数，this指向新创建的对象
-4. 如果通过apply、call、bind调用函数，this指向指定的数据
-5. 如果是DOM事件函数，this指向事件源
+***1. 通过对象调用函数，this指向对象***
+***2. 直接调用函数，this指向全局对象***
+***3. 如果通过new调用函数，this指向新创建的对象***
+***4. 如果通过apply、call、bind调用函数，this指向指定的数据***
+***5. 如果是DOM事件函数，this指向事件源***
 
 ### 使用语法
 
@@ -374,6 +402,16 @@ new.target
 2. 为了绑定外层this的函数
 3. 在不影响其他代码的情况下，保持代码的简洁，最常见的，数组方法中的回调函数
 
+```js
+// ()表示返回值是一个对像
+const sum = (a, b) => ({
+    a: a,
+    b: b,
+    sum: a + b
+});
+
+console.log(sum(3, 5))
+```
 
 # 对象
 ## 5-1. 新增的对象字面量语法
@@ -381,15 +419,58 @@ new.target
 1. 成员速写
 
 如果对象字面量初始化时，成员的名称来自于一个变量，并且和变量的名称相同，则可以进行简写
-
+```js
+function createUser(loginId, loginPwd, nickName) {
+    const sayHello = function () {
+        console.log("loginId", this.loginId, "nickname", this.nickName)
+    }
+    return {
+        loginId,//成员速写
+        loginPwd,
+        nickName,
+        sayHello,
+        id: Math.random()
+    }
+}
+const u = createUser("abc", "123", "aaa");
+u.sayHello();
+```
 2. 方法速写
 
 对象字面初始化时，方法可以省略冒号和function关键字
+```js
+const user = {
+    name: "姬成",
+    age: 100,
+    sayHello(){
+        console.log(this.name, this.age)
+    }
+}
+
+user.sayHello();
+```
+
 
 3. 计算属性名
 
 有的时候，初始化对象时，某些属性名可能来自于某个表达式的值，在ES6，可以使用中括号来表示该属性名是通过计算得到的。
+```js
+const prop1 = "name2";
+const prop2 = "age2";
+const prop3 = "sayHello2";
 
+const user = {
+    [prop1]: "姬成",
+    [prop2]: 100,
+    [prop3](){
+        console.log(this[prop1], this[prop2])
+    }
+}
+
+user[prop3]();
+
+console.log(user)
+```
 ## 5-2. Object的新增API
 
 1. Object.is
