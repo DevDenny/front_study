@@ -747,6 +747,84 @@ a.print();
 {属性名:变量名}
 
 ```
+```js
+const user = {
+    name: "kevin",
+    age: 11,
+    sex: "男",
+    address: {
+        province: "四川",
+        city: "成都"
+    }
+}
+// 先定义4个变量：name、age、gender、address
+// 再从对象user中读取同名属性赋值（其中gender读取的是sex属性）
+let { name, age, sex: gender = 123, address } = user
+
+console.log(name, age, gender, address)
+
+//解构出user中的name、province
+//定义两个变量name、province
+//再解构
+const { name, address: { province } } = user;
+
+```
+
+## 数组解构
+```js
+const numbers = ["a", "b", "c", "d"];
+
+// const {
+//     0: n1,
+//     1: n2
+// } = numbers;
+
+// let n1, n2;
+// ([n1, n2] = numbers);
+
+const [n1, n2] = numbers;
+console.log(n1, n2)
+
+const [n1, , , n4, n5 = 123] = numbers;
+console.log(n1, n4, n5)
+
+```
+
+## 参数解构
+```js
+function print({ name, age, sex, address: {
+    province,
+    city
+} }) {
+    console.log(`姓名：${name}`)
+    console.log(`年龄：${age}`)
+    console.log(`性别：${sex}`)
+    console.log(`身份：${province}`)
+    console.log(`城市：${city}`)
+}
+
+const user = {
+    name: "kevin",
+    age: 11,
+    sex: "男",
+    address: {
+        province: "四川",
+        city: "成都"
+    }
+}
+print(user)
+```
+```js
+function ajax({//参数对像整个看为一个参数，给其赋默认值{}，里面是解构默认值
+    method = "get",
+    url = "/"
+} = {}) {
+    console.log(method, url)
+}
+
+ajax()
+```
+
 
 # 符号
 ## 7-1. 普通符号
