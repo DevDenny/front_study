@@ -508,9 +508,52 @@ ES6规定了该方法返回的数组的排序方式如下：
 2. 原型成员可以被枚举
 3. 默认情况下，构造函数仍然可以被当作普通函数使用
 
+```js 
+class Animal {
+    constructor(type, name, age, sex) {
+        this.type = type;
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+    }
+
+    print() {
+        console.log(`【种类】：${this.type}`);
+        console.log(`【名字】：${this.name}`);
+        console.log(`【年龄】：${this.age}`);
+        console.log(`【性别】：${this.sex}`);
+    }
+}
+```
+
+```js
+//构造函数  构造器
+function Animal(type, name, age, sex) {
+    this.type = type;
+    this.name = name;
+    this.age = age;
+    this.sex = sex;
+}
+
+//定义实例方法（原型方法）
+Animal.prototype.print = function () {
+    console.log(`【种类】：${this.type}`);
+    console.log(`【名字】：${this.name}`);
+    console.log(`【年龄】：${this.age}`);
+    console.log(`【性别】：${this.sex}`);
+}
+
+const a = new Animal("狗", "旺财", 3, "男");
+a.print();
+
+for (const prop in a) {
+    console.log(prop)
+}
+```
+
 ### 类的特点
 
-1. 类声明不会被提升，与 let 和 const 一样，存在暂时性死区
+1. 类声明不会被提升，与 let 和 const 一样，存在暂时性死区(类先定义，后使用)
 2. 类中的所有代码均在严格模式下执行
 3. 类的所有方法都是不可枚举的
 4. 类的所有方法都无法被当作构造函数使用
@@ -525,6 +568,47 @@ ES6规定了该方法返回的数组的排序方式如下：
 Object.defineProperty 可定义某个对象成员属性的读取和设置
 
 使用getter和setter控制的属性，不在原型上
+
+```js
+const printName = "print";
+
+class Animal {
+    constructor(type, name, age, sex) {
+        this.type = type;
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+    }
+
+    //创建一个age属性，并给它加上getter，读取该属性时，会运行该函数
+    get age() {
+        return this._age + "岁";
+    }
+
+    //创建一个age属性，并给它加上setter，给该属性赋值时，会运行该函数
+    set age(age) {
+        if (typeof age !== "number") {
+            throw new TypeError("age property must be a number");
+        }
+        if (age < 0) {
+            age = 0;
+        }
+        else if (age > 1000) {
+            age = 1000;
+        }
+        this._age = age;
+    }
+
+    [printName]() {
+        console.log(`【种类】：${this.type}`);
+        console.log(`【名字】：${this.name}`);
+        console.log(`【年龄】：${this.age}`);
+        console.log(`【性别】：${this.sex}`);
+    }
+}
+
+var a = new Animal("狗", "旺财", 3, "男");
+```
 
 3. 静态成员
 
@@ -541,6 +625,16 @@ Object.defineProperty 可定义某个对象成员属性的读取和设置
 3). 箭头函数在字段初始化器位置上，指向当前对象
 
 5. 类表达式
+
+```js
+const A = class { //匿名类，类表达式
+    a = 1;
+    b = 2;
+}
+
+const a = new A();
+console.log(a)
+```
 
 6. [扩展]装饰器（ES7）(Decorator)
 
